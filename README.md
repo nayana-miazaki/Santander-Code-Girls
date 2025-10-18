@@ -55,6 +55,7 @@ instâncias EC2 funcionando como um HD externo para a sua máquina virtual.
 - Armazenamento para bancos de dados: `MySQL`, `PostgreSQL`, `Oracle`, etc.
 - Armazenamento de dados para aplicativos web e logs de sistema.
 
+---
 # Otimização de Recursos ✅
 Otimizar recursos na AWS significa poupar custos.
 
@@ -66,3 +67,98 @@ gerando custos.
 processar cargas de trabalho específicas.
    - `Escala Vertical`: aumentar a capacidade de um único recurso.
    - `Escala Horizontal`: aumentar o número de recursos.
+---
+
+# AWS Lambda 🛠️
+Tecnologia serverless onde os desenvolvedores não precisam se preocupar em
+gerenciar servidores.
+
+Principais Benefícios:
+- `pagamento por requisição`: a cobrança é feita apenas quando o código é
+executado.
+- `integração`: com diversos serviços AWS e suporta várias linguagens de
+programação
+- `sem gerenciamento de servidores`: a AWS é responsável pelo gerenciamento,
+liberando para o desenvolvedor focar apenas no código.
+
+# Módulo de Redes na AWS ⚙️
+## Amazon VPC (Virtual Private Cloud)
+Permite o provisionamento de uma rede lógica isolada na AWS. A VPC é 
+comparável a uma rede de datacenter tradicional mas com a escalabilidade
+em nuvem. 
+
+## Amazon Subnet
+É uma subdivisão da VPC, sendo uma gama de endereços IP onde os recursos
+AWS são criados (instâncias EC2). Cada sub-rede reside em uma únida Zona
+de Disponiblidade e pode ser pública ou privada. São nelas que os Security 
+Groups são criados.
+
+## Amazon Security Group
+Funciona como um firewall virtual para as instâncias EC2, controlando 
+o tráfego de entrada e saída. Permite habilitar regras e portas para 
+acessos específicos, como SSH e RDP.
+
+## Amazon Route 53
+Serviço de Sistema de Nomes de Domínio (DNS) que converte nomes de 
+domínio em endereços IP. Ele é fundamental para registro e 
+transferência de domínios.
+
+## Amazon CloudFront
+Um serviço de Content Delivery Network (CDN) que distribui conteúdo 
+globalmente a partir de Edge Locations, garantindo baixa latência 
+para o usuário final, independentemente de sua localização.
+
+## Amazon Elastic Load Balancer (ELB)
+Distribui o tráfego de forma eficiente e automática para um grupo 
+de servidores, aumentando a velocidade e o desempenho das aplicações.
+
+## Amazon RDS (Relational Database Service)
+Serviço de banco de dados relacional gerenciado que simplifica as 
+tarefas de configuração, operação e escalabilidade.
+
+* **Mecanismos Suportados:** Amazon Aurora, SQL Server, MySQL, 
+PostgreSQL, MariaDB e Oracle.
+* **Benefícios:** Fácil de gerenciar, automação de backups e 
+patches, rápida implantação.
+
+## Amazon DynamoDB
+Um banco de dados NoSQL totalmente gerenciado. É altamente 
+escalável e focado em fornecer baixa latência e desempenho 
+consistente para aplicativos que trabalham com dados não 
+estruturados ou semiestruturados (ex: Netflix, Airbnb).
+
+### Estratégias de Backup e Recuperação de Dados
+
+O backup é essencial para garantir a continuidade dos negócios 
+e reduzir o risco de perda de dados. <br> 
+As estratégias na AWS envolvem:
+
+1.  **Backups Automatizados:** Snapshots e logs de transação.
+2.  **Replicação:** Copiar dados para outras Regiões/AZs.
+3.  **Segurança:** Uso de criptografia (em trânsito e em repouso) 
+e políticas IAM para controlar o acesso.
+
+--- 
+
+# Github 🗂️
+
+| **Elemento** |                 **Sintaxe (Comando)**                 | 
+|:-----------|:-----------------------------------------------------:|
+| Cabeçalhos       |          # Título 1 ## Título 2 ### Título 3          |
+| Negrito       |                **texto** ou __texto__                 |
+| Itálico       |                  *texto* ou _texto_                   |
+| Negrito e Itálico       |                      ***texto***                      |
+| Tachado       |                       ~~texto~~                       |
+| Citação em Bloco       |             > Este é um bloco de citação.             |
+| Linha Horizontal       |       *** ou --- ou ___ (em uma linha separada)       |
+| Links       |                 [Texto do Link](URL)                  |
+| Imagens       |          ![Texto Alternativo](URL da Imagem)          |
+| Listas Não Ordenadas       |                   * Item 1 - Item 2                   |
+| Listas Ordenadas       |           1. Primeiro item 2. Segundo item            |
+| Bloco de Código       |                ```linguagem código ```                |
+| Código em Linha       |                       `código`                        |
+| Quebra de Linha       | Adicionar dois espaços no final da linha ou usar <br> |
+|   Listas de Tarefas  |       - [ ] Fazer algo - [x] Fazer outra coisa        |
+
+
+
