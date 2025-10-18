@@ -160,5 +160,35 @@ e políticas IAM para controlar o acesso.
 | Quebra de Linha       | Adicionar dois espaços no final da linha ou usar <br> |
 |   Listas de Tarefas  |       - [ ] Fazer algo - [x] Fazer outra coisa        |
 
+# 🚀 Stack na AWS: CloudFormation Essentials
 
+## 💡 CloudFormation: Primeiros Insights
+| **Seção do CFN** | **Aprendizado**                                                                                                   | Anotação                                                                                                                 |
+|:----------------|:------------------------------------------------------------------------------------------------------------------|:-------------------------------------------------------------------------------------------------------------------------|
+| `Parameters`    | Permite tornar o template reutilizável, definindo valores que podem ser passados na criação/atualização da Stack. | Sempre use Type e Default. Use `NoEcho`: true para dados sensíveis como senhas.                                          |
+| `Resources`     | É a única seção obrigatória. Define todos os recursos da AWS que serão criados                                    | O nome lógico do recurso (VPCPrincipal, WebSecurityGroup) deve ser exclusivo no template.                       |
+|  `Outputs`  | Permite exportar valores dos recursos criados para serem usados em outras Stacks.                                 | Para usar em outras Stacks, use a função `Export: Name: [NomeDaExportacao]` e importe com `Fn::ImportValue`. |
+|  `Mappings` | Útil para valores condicionais, como determinar o AMI ID correto baseado na região da AWS.                        |  Simplifica muito a lógica de `Region` e `InstanceType` sem usar muitas condições.    |
+
+## 🛠️ Desafios e Soluções
+
+| **Desafio Encontrado** | **Causa Raiz**                                                                                                      | **Solução**                                                             |
+|:----------------|:-----------------------------------------------------------------------------------------------------------------|:-------------------------------------------------------------------------|
+| **ROLLBACK_COMPLETE (Stack falhou e reverteu)**    | O Security Group estava tentando referenciar uma VPC que ainda não havia sido criada.| Adicionei a propriedade DependsOn: VPCPrincipal no recurso AWS::EC2::SecurityGroup      |
+|  **User data is too long**  |  Meu script de bootstrapping (UserData) para a EC2 estava muito extenso.  | Movi o script complexo para um S3 Bucket e fiz o UserData apenas baixar e executar esse script. |
+|  **Atualização Impossível** | Tentei modificar uma propriedade do recurso (ex: o CidrBlock da VPC) que requer substituição (Replacement). | Algumas modificações no CFN não são atualizações, e sim a criação de um novo recurso e a exclusão do antigo. Isso causa downtime.  |
+
+## 🔑 Segurança e Boas Práticas
+1. IAM Roles e Instance Profiles
+Sempre use **IAM Roles** com o conceito de menor privilégio para atribuir permissões à EC2, 
+nunca use chaves de acesso no `UserData`.
+ Para EC2, a Role deve ser associada via `AWS::IAM::InstanceProfile`.
+
+2. `DeletionPolicy`
+Utilizar o `DeletionPolicy: Retain` no meu Amazon S3 Bucket e no DynamoDB Table (se aplicável) 
+para garantir que os dados não sejam excluídos se a Stack for deletada.
+
+3. Ambiente de Desenvolvimento vs. Produção
+
+Criar Tags nos recursos para facilitar a identificação e o gerenciamento de custos.
 
