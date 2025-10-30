@@ -192,3 +192,45 @@ para garantir que os dados não sejam excluídos se a Stack for deletada.
 
 Criar Tags nos recursos para facilitar a identificação e o gerenciamento de custos.
 
+# Automação Assíncrona com S3 e AWS Lambda
+A Automação Assíncrona com S3 e AWS Lambda funciona como um sistema de processamento
+de eventos, onde o upload de um arquivo aciona automaticamente um código para 
+trabalhar com ele, sem a necessidade de servidores contínuos.
+
+**Fluxo de trabalho:** <br>
+
+1. Um novo arquivo (objeto) é carregado em um Bucket do Amazon S3;
+2. O S3 envia um evento de notificação para o AWS Lambda; 
+3. A Função Lambda é executada, processando o novo arquivo
+(ex: validação, transformação, ingestão de dados).
+
+O CloudFormation garante que o Bucket, a Função Lambda, as permissões de execução 
+(IAM Role) e a conexão do gatilho (Trigger) sejam provisionados de forma coesa e 
+repetida.
+
+**Vantagens:**
+1. `Serveless`: O AWS Lambda escala automaticamente e você paga apenas pelo 
+tempo de computação usado.
+2. `Escalabilidade Elástica`: Milhares de arquivos podem ser carregados no 
+S3 simultaneamente, e a Lambda criará instâncias paralelas da sua função 
+para processar todos eles ao mesmo tempo.
+3. `Baixa Latência`: O processamento começa quase instantaneamente após o 
+upload, garantindo que o tempo de resposta do sistema seja rápido.
+4. `Separação de Preocupações`: O S3 cuida de forma eficiente do 
+armazenamento e a Lambda cuida da computação, cada serviço fazendo o que faz de melhor.
+
+# ☁️ AWS CloudFormation
+
+## O que é AWS CloudFormation?
+O AWS CloudFormation é o serviço de Infraestrutura como Código (IaC) da AWS. 
+Ele permite que você modele, provisione e gerencie recursos da AWS de forma segura, 
+previsível e automatizada, tratando a infraestrutura como código versionado.
+
+| **Conceito** | **Descrição** |
+|--------------|---------------|
+| Template     | Um arquivo de texto (YAML ou JSON) que descreve exatamente quais recursos da AWS você deseja provisionar (ex: uma VPC, um S3 Bucket, uma instância EC2). É a planta da sua infraestrutura.              |
+| Stack        | A unidade de deployment. Uma Stack é a instância em execução de um Template. Quando você executa um Template, o CloudFormation cria uma Stack que contém todos os recursos definidos.              |
+| Parameters   | Variáveis de entrada que permitem reutilizar o mesmo Template em diferentes ambientes ou regiões. (Ex: o tipo de instância EC2, a senha do banco de dados).              |
+| Outputs      | Valores gerados pela Stack que podem ser referenciados por outras Stacks ou consumidos por aplicações. (Ex: o nome DNS de um Load Balancer recém-criado).              |
+
+
